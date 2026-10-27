@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.time.Clock;
-
+// Точка входа в приложение «Учебный центр»
 public final class Main {
     private Main() {
     }
