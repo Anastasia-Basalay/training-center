@@ -3,6 +3,7 @@ package center.domain;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
@@ -102,6 +103,13 @@ public class Course {
                 .flatMap(e -> e.getScore().stream())
                 .mapToInt(Integer::intValue)
                 .average();
+    }
+    //рейтинг слушателей по баллу
+    public List<Enrollment> ranking() {
+        return enrollments.stream()
+                .filter(e -> e.isActive() && e.getScore().isPresent())
+                .sorted(Comparator.comparingInt((Enrollment e) -> e.getScore().get()).reversed())
+                .toList();
     }
 
     public List<Enrollment> getEnrollments() {

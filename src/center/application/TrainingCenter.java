@@ -88,6 +88,10 @@ public class TrainingCenter {
         }
         return result;
     }
+    //посмотреть рейтинг слушателей курса
+    public List<Enrollment> ranking(String courseCode) {
+        return findCourse(courseCode).ranking();
+    }
 
     public Listener findListener(int listenerId) {
         Listener listener = listeners.get(listenerId);

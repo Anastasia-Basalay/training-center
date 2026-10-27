@@ -33,7 +33,7 @@ public class ConsoleMenu {
             boolean running = true;
             while (running) {
                 printMenu();
-                int choice = in.readInt("Выберите пункт меню", 0, 11);
+                int choice = in.readInt("Выберите пункт меню", 0, 12);
                 running = handle(choice);
             }
         } catch (InputClosedException e) {
@@ -55,6 +55,7 @@ public class ConsoleMenu {
             case 9 -> execute(this::showCourseReport);
             case 10 -> showListenersAndCourses();
             case 11 -> loadDemoData();
+            case 12 -> execute(this::showRanking);
             default -> {
                 return false;
             }
@@ -95,6 +96,7 @@ public class ConsoleMenu {
         out.println("Прочее:");
         out.println("  10. Показать слушателей и курсы");
         out.println("  11. Загрузить демо-данные");
+        out.println("  12. Рейтинг слушателей курса");
         out.println("  0. Выход");
     }
 
@@ -178,6 +180,19 @@ public class ConsoleMenu {
         OptionalDouble average = course.averageScore();
         out.println("  Средний балл: " + (average.isPresent() ? String.format("%.1f", average.getAsDouble()) : "—"));
         course.getEnrollments().forEach(e -> out.println("  * " + e));
+    }
+    private void showRanking() {
+        String code = in.readCourseCode("Код курса");
+        List<Enrollment> ranking = center.ranking(code);
+        out.println("Рейтинг слушателей курса " + center.findCourse(code).getCode() + ":");
+        if (ranking.isEmpty()) {
+            out.println("  Оценок пока нет.");
+            return;
+        }
+        int place = 1;
+        for (Enrollment e : ranking) {
+            out.println("  " + place++ + ". " + e);
+        }
     }
 
     private void showListenersAndCourses() {
