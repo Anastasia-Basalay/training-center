@@ -1,0 +1,27 @@
+@startuml
+title Диаграмма последовательности: «Записаться на курс»
+
+actor "Слушатель" as User
+participant "menu:ConsoleMenu" as Menu
+participant "center:TrainingCenter" as Center
+participant "course:Course" as Course
+participant "enrollment:Enrollment" as Enrollment
+
+User -> Menu ++ : Записаться на курс
+Menu -> Center ++ : enroll(listenerId, courseCode)
+Center -> Course ++ : enroll(listener, today())
+Course -> Course ++ : ensureFreePlace()
+return
+
+alt курс начат / слушатель уже записан / нет свободных мест
+    Course -->> Menu : DomainException(причина)
+    Menu -->> User : Отказ: причина
+else все проверки пройдены
+    create Enrollment
+    Course -> Enrollment ++ : new Enrollment()
+    Enrollment -->> Course -- : enrollment
+    Course -->> Center -- : enrollment
+    Center -->> Menu -- : enrollment
+    Menu -->> User -- : Запись оформлена
+end
+@enduml
