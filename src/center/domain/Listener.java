@@ -1,7 +1,7 @@
 package center.domain;
 
 import java.util.regex.Pattern;
-
+// Слушатель учебного центра
 public class Listener {
     private static final Pattern EMAIL = Pattern.compile("^[\\w.+-]+@[\\w-]+(\\.[\\w-]+)+$");
 
