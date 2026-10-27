@@ -10,6 +10,7 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 // Точка входа в приложение «Учебный центр»
+//привет
 public final class Main {
     private Main() {
     }
